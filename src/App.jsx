@@ -99,7 +99,7 @@ const getOpenStatus = () => {
 export default function PremiumCafeMenu() {
   const [activeTab, setActiveTab] = useState(MENU_DATA[0].id);
   const [showBackToTop, setShowBackToTop] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [darkMode, setDarkMode] = useState(true);
   const [waitTime] = useState(getWaitTime);
