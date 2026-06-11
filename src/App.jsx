@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 
-// ==================== MENU DATA ====================
+// ========== MENU ==========
 const MENU_DATA = [
   {
     id: 'cafe',
@@ -52,7 +52,6 @@ const MENU_DATA = [
   }
 ];
 
-// ==================== INSTAGRAM FEED ====================
 const INSTAGRAM_POSTS = [
   { id: 1, image: 'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=400&q=80', likes: 124, comments: 12, url: 'https://instagram.com/p/EXEMPLE1' },
   { id: 2, image: 'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?w=400&q=80', likes: 89, comments: 7, url: 'https://instagram.com/p/EXEMPLE2' },
@@ -62,14 +61,12 @@ const INSTAGRAM_POSTS = [
   { id: 6, image: 'https://images.unsplash.com/photo-1510591509098-f4fdc6d0ff04?w=400&q=80', likes: 145, comments: 11, url: 'https://instagram.com/p/EXEMPLE6' },
 ];
 
-// ==================== CONCEPT ====================
 const CONCEPT_DATA = [
   { icon: '🌿', title: 'Produits frais', desc: 'Sélection rigoureuse de producteurs locaux' },
   { icon: '☕', title: 'Café de spécialité', desc: 'Grains sourcés directement chez les producteurs' },
   { icon: '🤝', title: 'Artisanat local', desc: 'Pâtisseries et pains faits maison chaque jour' }
 ];
 
-// ==================== GALERIE 360 ====================
 const GALLERY_360 = [
   'https://images.unsplash.com/photo-1442512595331-e89e73853f31?w=600&q=80',
   'https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=600&q=80',
@@ -78,7 +75,6 @@ const GALLERY_360 = [
   'https://images.unsplash.com/photo-1554118811-1e0d58224f24?w=600&q=80',
 ];
 
-// ==================== HELPERS ====================
 const getWaitTime = () => {
   const times = ['5-8 min', '8-12 min', '10-15 min', '3-6 min'];
   return times[Math.floor(Date.now() / 1800000) % times.length];
@@ -97,7 +93,6 @@ const getOpenStatus = () => {
   return { open: false, message: 'Fermé actuellement' };
 };
 
-// ==================== COMPOSANT PRINCIPAL ====================
 export default function PremiumCafeMenu() {
   const [activeTab, setActiveTab] = useState(MENU_DATA[0].id);
   const [showBackToTop, setShowBackToTop] = useState(false);
@@ -108,20 +103,17 @@ export default function PremiumCafeMenu() {
   const [selectedItem, setSelectedItem] = useState(null);
   const navRef = useRef(null);
 
-  // Splash screen
   useEffect(() => {
     const timer = setTimeout(() => setLoading(false), 1500);
     return () => clearTimeout(timer);
   }, []);
 
-  // Back to top visibility
   useEffect(() => {
     const handleScrollVisibility = () => setShowBackToTop(window.scrollY > 400);
     window.addEventListener('scroll', handleScrollVisibility);
     return () => window.removeEventListener('scroll', handleScrollVisibility);
   }, []);
 
-  // Active tab detection (ultra réactif)
   useEffect(() => {
     let ticking = false;
     const headerHeight = 110;
@@ -155,7 +147,6 @@ export default function PremiumCafeMenu() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [activeTab]);
 
-  // Auto-scroll nav button into view
   useEffect(() => {
     if (!navRef.current) return;
     const activeBtn = navRef.current.querySelector(`[data-id="${activeTab}"]`);
@@ -191,7 +182,6 @@ export default function PremiumCafeMenu() {
   const filteredMenu = getFilteredData();
   const status = getOpenStatus();
 
-  // Theme classes
   const bgClass = darkMode ? 'bg-[#111111]' : 'bg-[#F5F0EB]';
   const textClass = darkMode ? 'text-white' : 'text-[#1A1A1A]';
   const cardBgClass = darkMode ? 'bg-[#1A1A1A] border-[#2A2A2A]' : 'bg-white border-[#E0D6CD]';
@@ -213,15 +203,11 @@ export default function PremiumCafeMenu() {
 
   return (
     <div className={`${bgClass} ${textClass} min-h-screen font-sans selection:bg-orange-500/30 transition-colors duration-300`}>
-      {/* Dark/Light toggle */}
-      <button
-        onClick={() => setDarkMode(!darkMode)}
-        className="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-500/30 flex items-center justify-center hover:bg-orange-500/40 transition-all duration-300"
-      >
+      <button onClick={() => setDarkMode(!darkMode)} className="fixed top-4 right-4 z-50 w-10 h-10 rounded-full bg-orange-500/20 backdrop-blur-md border border-orange-500/30 flex items-center justify-center hover:bg-orange-500/40 transition-all duration-300">
         {darkMode ? '☀️' : '🌙'}
       </button>
 
-      {/* Hero section */}
+      {/* Hero */}
       <header className="relative h-[45vh] min-h-[350px] md:h-[50vh] w-full flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=2000" alt="Coffee aesthetic" className="w-full h-full object-cover scale-105" />
@@ -244,7 +230,7 @@ export default function PremiumCafeMenu() {
         </div>
       </header>
 
-      {/* Concept section */}
+      {/* Concept */}
       <div className="max-w-5xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
           <h2 className={`text-2xl md:text-3xl font-light tracking-wide ${textClass}`}>Notre Concept</h2>
@@ -269,29 +255,12 @@ export default function PremiumCafeMenu() {
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
-            <input
-              type="text"
-              placeholder="Rechercher un plat ou boisson..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className={`w-full ${cardBgClass} border ${darkMode ? 'border-[#2A2A2A]' : 'border-[#D4C9BF]'} rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-orange-500 transition-colors ${textClass}`}
-            />
+            <input type="text" placeholder="Rechercher un plat ou boisson..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className={`w-full ${cardBgClass} border ${darkMode ? 'border-[#2A2A2A]' : 'border-[#D4C9BF]'} rounded-xl py-2 pl-10 pr-4 text-sm focus:outline-none focus:border-orange-500 transition-colors ${textClass}`} />
           </div>
           <nav ref={navRef} className="flex overflow-x-auto py-2 gap-2 no-scrollbar scroll-smooth" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
             <style dangerouslySetInnerHTML={{ __html: `nav::-webkit-scrollbar { display: none; }` }} />
             {MENU_DATA.map((category) => (
-              <button
-                key={category.id}
-                data-id={category.id}
-                onClick={() => scrollToSection(category.id)}
-                className={`flex items-center gap-2 px-5 py-2 rounded-full whitespace-nowrap transition-all duration-300 text-sm font-medium border ${
-                  activeTab === category.id
-                    ? 'bg-orange-500 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.2)]'
-                    : darkMode
-                    ? 'bg-[#1A1A1A] border-[#2A2A2A] text-gray-400 hover:text-white'
-                    : 'bg-white border-[#D4C9BF] text-gray-600 hover:text-black'
-                }`}
-              >
+              <button key={category.id} data-id={category.id} onClick={() => scrollToSection(category.id)} className={`flex items-center gap-2 px-5 py-2 rounded-full whitespace-nowrap transition-all duration-300 text-sm font-medium border ${activeTab === category.id ? 'bg-orange-500 border-orange-500 text-white shadow-[0_0_15px_rgba(249,115,22,0.2)]' : darkMode ? 'bg-[#1A1A1A] border-[#2A2A2A] text-gray-400 hover:text-white' : 'bg-white border-[#D4C9BF] text-gray-600 hover:text-black'}`}>
                 <span className="text-base">{category.icon}</span>
                 {category.title}
               </button>
@@ -300,11 +269,9 @@ export default function PremiumCafeMenu() {
         </div>
       </div>
 
-      {/* Menu sections */}
+      {/* Menu */}
       <main className="max-w-3xl mx-auto px-4 py-10 space-y-16">
-        {filteredMenu.length === 0 && (
-          <div className="text-center py-20 text-gray-400">Aucun résultat trouvé pour "{searchQuery}"</div>
-        )}
+        {filteredMenu.length === 0 && <div className="text-center py-20 text-gray-400">Aucun résultat trouvé pour "{searchQuery}"</div>}
         {filteredMenu.map((category) => (
           <section key={category.id} id={category.id} className="scroll-mt-28">
             <div className="mb-6 pl-3 border-l-2 border-orange-500">
@@ -314,12 +281,8 @@ export default function PremiumCafeMenu() {
               </h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {category.items.map((item, index) => (
-                <div
-                  key={index}
-                  onClick={() => setSelectedItem(item)}
-                  className={`group ${cardBgClass} border p-3 rounded-2xl transition-all duration-300 ${cardHoverClass} hover:-translate-y-0.5 flex gap-4 items-start cursor-pointer`}
-                >
+              {category.items.map((item, idx) => (
+                <div key={idx} onClick={() => setSelectedItem(item)} className={`group ${cardBgClass} border p-3 rounded-2xl transition-all duration-300 ${cardHoverClass} hover:-translate-y-0.5 flex gap-4 items-start cursor-pointer`}>
                   <div className="relative w-20 h-20 shrink-0 rounded-xl overflow-hidden bg-[#222222] border border-[#333333]">
                     <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
                   </div>
@@ -342,7 +305,7 @@ export default function PremiumCafeMenu() {
         ))}
       </main>
 
-      {/* Instagram feed */}
+      {/* Instagram */}
       <div className="max-w-4xl mx-auto px-4 py-12">
         <div className="text-center mb-8">
           <h2 className={`text-2xl font-light tracking-wide ${textClass}`}>📸 Ils parlent de nous sur Instagram</h2>
@@ -424,20 +387,17 @@ export default function PremiumCafeMenu() {
         </div>
       </footer>
 
-      {/* Back to top button */}
       {showBackToTop && (
         <button onClick={scrollToTop} className="fixed bottom-6 right-6 z-40 bg-orange-500 hover:bg-orange-600 text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110">
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 10l7-7m0 0l7 7m-7-7v18" /></svg>
         </button>
       )}
 
-      {/* MODAL (affiché si un produit est sélectionné) */}
+      {/* Modal */}
       {selectedItem && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm" onClick={() => setSelectedItem(null)}>
           <div className={`relative max-w-md w-full rounded-2xl overflow-hidden ${cardBgClass} border shadow-2xl`} onClick={(e) => e.stopPropagation()}>
-            <button onClick={() => setSelectedItem(null)} className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition">
-              ✕
-            </button>
+            <button onClick={() => setSelectedItem(null)} className="absolute top-3 right-3 z-10 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-black/70 transition">✕</button>
             <img src={selectedItem.image} alt={selectedItem.name} className="w-full h-64 object-cover" />
             <div className="p-5 space-y-3">
               <div className="flex flex-wrap items-center justify-between gap-2">
