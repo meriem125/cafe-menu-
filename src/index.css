@@ -1,3 +1,6 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.scroll-mt-28 {
+  scroll-margin-top: 112px;
+}
